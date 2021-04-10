@@ -1,0 +1,11 @@
+[
+  {
+    "arena-id": "test",
+    "arena-name": "test",
+    "arena-world": "pepej",
+    "max-players": 6,
+    "arena-start-delay": "10 sec",
+    "arena-game-time": "30 sec"
+
+  }
+]
