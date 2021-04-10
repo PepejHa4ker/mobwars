@@ -3,6 +3,7 @@ package com.pepej.mobwars
 import com.pepej.mobwars.arena.ArenaLoader
 import com.pepej.mobwars.arena.ArenaLoaderImpl
 import com.pepej.mobwars.service.ArenaService
+import com.pepej.mobwars.service.EntityService
 import com.pepej.mobwars.service.UserService
 import com.pepej.mobwars.service.impl.UserServiceImpl
 import com.pepej.papi.adventure.platform.bukkit.BukkitAudiences
@@ -25,6 +26,7 @@ class MobWars : PapiJavaPlugin() {
         val audiences = BukkitAudiences.create(this)
         provideService(BukkitAudiences::class.java, bind(audiences))
         provideService(UserService::class.java, bindModule(UserServiceImpl()))
+        provideService(EntityService::class.java)
         val arenaLoader = ArenaLoaderImpl(getBundledFile("arenas.json"))
         provideService(ArenaLoader::class.java, arenaLoader)
         bindModule(Commands())

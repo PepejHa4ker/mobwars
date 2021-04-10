@@ -2,6 +2,7 @@ package com.pepej.mobwars
 
 import com.pepej.mobwars.api.Arena
 import com.pepej.mobwars.menu.ArenaSelectorMenu
+import com.pepej.mobwars.menu.EntitySpawnerMenu
 import com.pepej.mobwars.service.ArenaService
 import com.pepej.mobwars.service.UserService
 import com.pepej.papi.command.Commands
@@ -32,6 +33,13 @@ class Commands : TerminableModule {
         arenaService.getArenas().map { it?.context()?.config()?.arenaId }
         Commands.create()
             .assertPlayer()
+            .handler {
+                val user = userService.getUserByPlayer(it.sender())
+                user?.currentArena?.leave(user)
+            }
+            .registerAndBind(consumer, "лив", "leave", "выход")
+        Commands.create()
+            .assertPlayer()
             .assertUsage("<arena>")
             .tabHandler { arenas() }
             .handler {
@@ -41,6 +49,12 @@ class Commands : TerminableModule {
 
             }
             .registerAndBind(consumer, "join")
+        Commands.create()
+            .assertPlayer()
+            .handler {
+                EntitySpawnerMenu(it.sender()).open()
+            }
+            .registerAndBind(consumer, "mobs")
 
     }
 

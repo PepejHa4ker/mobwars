@@ -3,6 +3,7 @@ package com.pepej.mobwars.api
 import com.pepej.mobwars.arena.ArenaConfig
 import com.pepej.mobwars.model.User
 import com.pepej.papi.scoreboard.Scoreboard
+import com.pepej.papi.scoreboard.ScoreboardObjective
 import com.pepej.papi.terminable.TerminableConsumer
 import org.bukkit.World
 import java.time.Duration
@@ -21,11 +22,13 @@ interface Arena : Runnable, TerminableConsumer {
 
     fun resetTimers()
 
-    fun updateScoreboard()
+    fun updateScoreboard(user: User?, objective: ScoreboardObjective?)
 
-    fun join(user: User, color: TeamColor = TeamColor.values().random())
+    fun broadcastMessage(message: String?, onlyForSameTeam: Boolean = false, team: TeamColor? = null)
 
-    fun leave(user: User)
+    fun join(user: User?, color: TeamColor = TeamColor.values().random())
+
+    fun leave(user: User?)
 
     fun startListening()
 
@@ -39,7 +42,7 @@ interface Arena : Runnable, TerminableConsumer {
 
         fun config(): ArenaConfig
 
-        fun users():  MutableMap<TeamColor, MutableSet<User>>
+        fun users(): MutableMap<TeamColor, MutableSet<User?>>
 
         fun scoreboard(): Scoreboard
 
@@ -55,9 +58,9 @@ interface Arena : Runnable, TerminableConsumer {
 
     }
 
-    enum class TeamColor(val color: String) {
-        RED("&c"),
-        BLUE("&b")
+    enum class TeamColor(val color: String, val displayName: String) {
+        RED("&c", "Красная"),
+        BLUE("&b", "Синяя")
     }
 
 
